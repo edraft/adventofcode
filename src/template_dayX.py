@@ -6,8 +6,11 @@ from cpl_query.enumerable import Enumerable
 from cpl_query.extension import List
 from cpl_core.pipes import *
 
+from aoc.aoc import get_input
+
 # global vars
 day = 0
+aoc_input = get_input(2022, day)
 
 
 def main():
