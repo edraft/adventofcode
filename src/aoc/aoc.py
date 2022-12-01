@@ -1,12 +1,18 @@
 import os
 import urllib.request
 
+from cpl_core.console import Console
+
 
 def _get_cookie_headers() -> dict[str, str]:
     """
     original code from https://github.com/anthonywritescode/aoc2022/blob/main/support/support.py
     """
-    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), '../../.env')) as f:
+    env = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../../.env')
+    if not os.path.exists(env):
+        Console.error(f'Session key from https://adventofcode.com/ required')
+
+    with open(env) as f:
         contents = f.read().strip()
     return {'Cookie': contents}
 
