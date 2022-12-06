@@ -23,8 +23,10 @@ def get_input(year: int, day: int) -> str:
     original code from https://github.com/anthonywritescode/aoc2022/blob/main/support/support.py
     """
     file = f'input/{year}/input_{day}.txt'
-    if not os.path.exists(file):
+    if not os.path.exists(os.path.dirname(file)):
         os.makedirs(os.path.dirname(file))
+
+    if not os.path.exists(file):
         url = f'https://adventofcode.com/{year}/day/{day}/input'
         req = urllib.request.Request(url, headers=_get_cookie_headers())
         txt = urllib.request.urlopen(req).read().decode()
