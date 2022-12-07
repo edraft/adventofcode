@@ -1,5 +1,3 @@
-import json
-from functools import reduce
 from typing import Optional
 
 from cpl_core.console import Console
@@ -78,9 +76,6 @@ class Dir:
     def size_small_files(self) -> int:
         total_size = 0
 
-        # for file, size in self._files:
-        #     total_size += size
-
         file_size = self.size
         if file_size > 100000:
             file_size = 0
@@ -93,28 +88,36 @@ class Dir:
 
         return total_size
 
-    def add_dir(self, dir: 'Dir'):
-        self._dirs.append(dir)
+    def add_dir(self, name: str):
+        self._dirs.append(Dir(name, self))
 
     def add_file(self, name: str, size: int):
         self._files.append((name, size))
 
 
-def main():
+def get_dirs(pwd: Dir, dirs=None) -> List(Dir):
+    if dirs is None:
+        dirs = List(Dir)
+
+    for d in pwd.dirs:
+        dirs.append(d)
+        get_dirs(d, dirs)
+
+    return dirs
+
+
+def part1() -> Dir:
     root = Dir('/', None)
     pwd = root
-    is_ls = True
-    for line in aoc_input.splitlines():
+    for line in aoc_input.splitlines()[1:]:
         s_line = line.split()
         if line.startswith('$'):
             if s_line[1] == 'ls':
-                is_ls = True
                 continue
 
             if s_line[2] == '..':
                 pwd = pwd.parent
-            elif pwd.name != s_line[2]:
-                Console.write_line(s_line[2], pwd.name, pwd.dirs.select(lambda x: x.name))
+            else:
                 pwd = pwd.dirs.where(lambda d: d.name == s_line[2]).single()
 
             continue
@@ -122,25 +125,20 @@ def main():
         p1 = s_line[0]
         p2 = s_line[1]
         if p1 == 'dir':
-            Console.write_line(pwd.name, p2)
-            pwd.add_dir(Dir(p2, pwd))
+            pwd.add_dir(p2)
         else:
             pwd.add_file(p2, int(p1))
 
-    # def get_dirs(pwd: Dir, dirs=None):
-    #     if dirs is None:
-    #         dirs = []
-    #
-    #     for d in pwd.dirs:
-    #         dirs.append(d.name)
-    #         get_dirs(d, dirs)
-    #
-    #     return dirs
+    return root
 
-    Console.write_line(root.size_small_files)
+
+def part2(root: Dir):
+    space_required = 30000000 - (70000000 - root.size)
+    Console.write_line(Enumerable(int, [*get_dirs(root).select(lambda x: x.size), root.size]).order_by(lambda x: x).where(lambda x: x >= space_required).first())
 
 
 if __name__ == '__main__':
     Console.write_line(f'Advent of code day {day}')
-    main()
+    root = part1()
+    part2(root)
     Console.write_line()
