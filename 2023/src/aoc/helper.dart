@@ -17,11 +17,6 @@ Future<String> getInput(int year, int day) async {
     File(filePath).create(recursive: true);
 
     var url = Uri.parse('https://adventofcode.com/$year/day/$day/input');
-    final Map<String, String> _headers = {
-      "Content-Type": "application/json",
-      "Accept": "application/json",
-    };
-
     var response = await http.get(url, headers: getCookieHeaders());
     File(filePath).writeAsStringSync(response.body);
   }
