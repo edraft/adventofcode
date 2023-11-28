@@ -1,0 +1,20 @@
+#!/bin/bash
+
+if [ -z "$1" ]; then
+    echo "Expected year"
+    exit;
+fi
+
+if [ -z "$2" ]; then
+    echo "Expected day"
+    exit;
+fi
+
+if [ $2 > 25 ]; then
+    echo "Invalid day"
+    exit;
+fi 
+
+cd $1
+
+./run_day $2
