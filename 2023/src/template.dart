@@ -8,6 +8,9 @@ void secondPart() {}
 
 Future<void> main(List<String> args) async {
   if (args.isEmpty) {
+    print("Expected year");
+    return;
+  } else if (args.length < 2) {
     print("Expected day");
     return;
   }

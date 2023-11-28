@@ -2,8 +2,7 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 
 Map<String, String> getCookieHeaders() {
-  print(Directory.current.path);
-  var env = File('../.env');
+  var env = File('.env');
   if (!env.existsSync()) {
     throw Exception('Session key from https://adventofcode.com/ required');
   }

@@ -10,11 +10,11 @@ if [ -z "$2" ]; then
     exit;
 fi
 
-if [ $2 > 25 ]; then
+if [ ${2} -ge 25 ]; then
     echo "Invalid day"
     exit;
 fi 
 
 cd $1
 
-./run_day $2
+./run_day $2 $1
