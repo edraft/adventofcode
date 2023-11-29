@@ -2,9 +2,13 @@ import 'aoc/helper.dart';
 
 String input = "";
 
-void firstPart() {}
+String firstPart() {
+  return "unsolved";
+}
 
-void secondPart() {}
+String secondPart() {
+  return "unsolved";
+}
 
 Future<void> main(List<String> args) async {
   if (args.isEmpty) {
@@ -20,6 +24,6 @@ Future<void> main(List<String> args) async {
 
   input = await getInput(year, day);
   print('Advent of code $year day $day');
-  firstPart();
-  secondPart();
+  print('First part result: ${firstPart()}');
+  print('Second part result: ${secondPart()}');
 }
